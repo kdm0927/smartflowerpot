@@ -1,0 +1,53 @@
+/* 393px 기준 → 1px ≈ 1.91rpx */
+.home { position: relative; width: 750rpx; min-height: 1838rpx; background: #FFFCEE; overflow: hidden; }
+
+.bg { position: absolute; left: -262rpx; top: 0; width: 1380rpx; height: 1838rpx; }
+
+.topbar { position: absolute; left: 0; top: 0; width: 750rpx; height: 150rpx; background: rgba(74,159,78,0.6); }
+
+.greeting { position: absolute; top: 73rpx; left: 0; width: 750rpx; text-align: center; color: #fff; }
+.greeting .t1 { font-size: 42rpx; font-weight: 600; }
+.greeting .t2 { margin-top: 12rpx; font-size: 30rpx; }
+
+.card { background: rgba(255,255,255,0.75);
+  margin-top: 10rpx;
+  border-radius: 30rpx; box-shadow: 0 12rpx 24rpx rgba(0,0,0,0.2); }
+
+/* Quest */
+.quest { position: absolute; top:250rpx; left: 78rpx; width: 555rpx; padding: 24rpx; }
+
+.quest-title { display:block; text-align:center; font-size: 60rpx; color:rgb(0, 0, 0); margin-bottom: 16rpx; }
+.quest-row { display: flex; align-items: center; gap: 16rpx; margin: 10rpx 0; }
+.quest-row .done { text-decoration: line-through; color: #74CD79; }
+
+/* Status card */
+.status { position: absolute; top: 650rpx; left: 78rpx; width: 595rpx; height: 424rpx; background: #FFFCEE; 
+}
+.pot { position: absolute; left: 99rpx; top: 1000rpx; width: 288rpx; height: 288rpx; transform: translate(-99rpx,-918rpx); } /* 절대좌표 보정 */
+.status-text { position: absolute; left: 650rpx; top: 950rpx; width: 300rpx; transform: translate(-350rpx,-900rpx); }
+.status-text .big { display:block; font-size: 38rpx; color:#595959; }
+.status-text .accent { display:inline-block; font-size: 42rpx; color:#2E7D32; font-weight: 600; margin: 0 6rpx; }
+.mini-rows { margin-top: 16rpx; }
+.mini { display:flex; align-items:center; gap: 10rpx; margin: 8rpx 0; color: #595959; font-size: 30rpx; opacity:.9; }
+.mini-icon { width: 32rpx; height: 32rpx; opacity:.5; }
+
+/* Tiles */
+.tiles { position: absolute; left: 78rpx; top: 1150rpx; width: 595rpx; display: grid; grid-template-columns: 227rpx 330rpx; grid-template-rows: 222rpx 202rpx; grid-gap: 24rpx; }
+
+.tile { position: relative; border-radius: 30rpx; overflow: hidden; box-shadow: 0 8rpx 16rpx rgba(0,0,0,.2); }
+.tile-bg { position:absolute; inset:0; width:100%; height:100%; }
+.weather { grid-row: 1 / 3; grid-column: 1 / 2; }
+.album { grid-row: 1 / 2; grid-column: 2 / 3; }
+.care  { grid-row: 2 / 3; grid-column: 2 / 3; }
+
+.w-temp { position:absolute; left:0; top:20rpx; width:100%; text-align:center; padding-top: 0; font-size: 30rpx; color:#fff; }
+.w-title{ position:absolute; left:0; top: 57rpx; width:100%; text-align:center; font-size: 46rpx; color:#fff; }
+.pm-ring { position:absolute; left: 70rpx; top: 147rpx; width: 95rpx; height: 95rpx; }
+.pm-ring-outer { position:absolute; inset:0; border: 11rpx solid rgba(202,250,255,.54); border-radius: 999rpx; }
+.pm-ring-inner { position:absolute; inset:0; margin: 0; background: rgba(76,177,195,.84); border-radius: 999rpx; transform: scale(.76); }
+.pm-label { position:absolute; top: 175rpx; width:100%; text-align:center; color:#595959; font-size: 20rpx; }
+
+.tile-title { position:absolute; left: 28rpx; bottom: 28rpx; right: 28rpx; color:#595959; font-size: 38rpx; line-height: 48rpx; }
+
+/* 보조: 시스템 네비가 가리지 않도록 */
+page { background: #FFFCEE; }

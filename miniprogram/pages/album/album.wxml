@@ -1,0 +1,50 @@
+<back-btn text="Back" home="/pages/index/index" />
+
+<!-- 배경 & 상단 헤더 -->
+<image class="album-bg" src="/images/albumbg.png" />
+
+<view class="header-scrim"></view>
+<view class="header">
+  <text class="title">Growth Album 📸</text>
+  <text class="sub">{{today}}, Growing+{{growing}}</text>
+</view>
+
+<!-- 본문 -->
+<view class="container">
+
+  <!-- 목록 -->
+  <block wx:for="{{list}}" wx:key="_id">
+    <view class="entry" bindlongpress="deleteEntry" data-id="{{item._id}}" data-fileid="{{item.photoUrl}}">
+      <!-- 사진과 프레임 -->
+      <view class="photo-wrap">
+        <image class="img" src="{{item.photoUrl}}" mode="aspectFill" />
+        <image class="frame" src="/images/frame1.png" mode="aspectFill" />
+      </view>
+
+      <!-- 날짜(오른쪽 상단) -->
+      <text class="date">{{item.displayTime.split(' ')[0]}}</text>
+
+      <!-- 말풍선 캡션 -->
+      <view class="bubble"><text class="bubble-text">{{item.note}}</text></view>
+    </view>
+  </block>
+
+    <!-- 작성 폼 (디자인과 겹치지 않게 반투명) -->
+    <view class="card composer">
+    <view class="pick-row">
+      <image wx:if="{{compose.photoTempPath}}" class="preview" mode="aspectFill" src="{{compose.photoTempPath}}" />
+      <button wx:if="{{!compose.photoTempPath}}" class="pick-btn" bindtap="pickImage">+ Add Photo</button>
+      <button wx:if="{{compose.photoTempPath}}" class="remove-btn" bindtap="removePicked">Remove</button>
+    </view>
+    <textarea class="note-input"
+      placeholder="Write a caption..."
+      maxlength="300"
+      bindinput="onNoteInput"
+      value="{{compose.note}}"
+      auto-height
+    />
+    <button class="submit" type="primary" bindtap="submitEntry" loading="{{submitting}}">Post</button>
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">No entries yet</view>
+</view>

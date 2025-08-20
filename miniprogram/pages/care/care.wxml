@@ -1,0 +1,39 @@
+<back-btn text="Back" home="/pages/index/index" />
+
+<view class="care">
+  <!-- 배경 + 상단 스크림 -->
+  <image class="bg" src="/images/waterbg.png" mode="aspectFill" />
+  <view class="scrim"></view>
+
+  <!-- 헤더 -->
+  <view class="header">
+    <text class="h1">Take care of Flower!</text>
+    <text class="h2">{{today}}, Growing+{{growing}}</text>
+  </view>
+
+  <!-- 말풍선 -->
+  <view class="speech">
+    <text>I am feeling <text class="em">Thirsty 💧</text>.{{
+      '\n'
+    }}Can I have some water?</text>
+  </view>
+
+  <!-- 큰 물방울 버튼 -->
+  <button class="drop-btn {{watering?'is-watering':''}}"
+          bindtap="waterNow"
+          disabled="{{watering}}">
+    <image class="drop-img" src="/images/watericon.png" mode="aspectFit" />
+    <view class="drop-label">
+      <text>Water Your Flower!</text>
+    </view>
+  </button>
+
+  <!-- 자동급수 카드 -->
+  <view class="auto-card">
+    <text class="auto-label">Automatic water supply</text>
+    <switch class="auto-switch"
+            checked="{{autoMode}}"
+            bindchange="toggleAuto"
+            color="#7edc8b" />
+  </view>
+</view>

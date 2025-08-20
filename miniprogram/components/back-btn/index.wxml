@@ -1,0 +1,4 @@
+<view class="back-btn {{type}}" catchtap="onBack" style="{{customStyle}}">
+  <text class="icon">‹</text>
+  <text class="label">{{text}}</text>
+</view>

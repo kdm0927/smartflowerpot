@@ -1,0 +1,8 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/care/care",
+    "pages/album/album"
+  ],
+  "window": { "navigationStyle": "custom", "backgroundTextStyle": "light" }
+}

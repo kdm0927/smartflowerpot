@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "智能花盆",
+  "usingComponents": {
+    "cloud-tip-modal": "/components/cloudTipModal/index"
+  }
+}

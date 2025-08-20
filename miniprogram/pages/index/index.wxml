@@ -1,0 +1,76 @@
+<view class="home">
+  <!-- 배경 이미지 -->
+  <image class="bg" src="/images/houseplant-7367379_1280.png" />
+
+  <!-- 상단 반투명 헤더 -->
+  <view class="topbar"></view>
+  <view class="greeting">
+    <text class="t1">Good morning! 🌿</text>
+    <text class="t2">{{today}}, Growing+{{growing}}</text>
+  </view>
+
+  <!-- Today’s Quest 카드 (간단 버전) -->
+  <view class="quest card">
+    <text class="quest-title">Today’s Quest</text>
+    <checkbox-group>
+      <label class="quest-row">
+        <checkbox checked="true"/><text>Naming my Plant</text>
+      </label>
+      <label class="quest-row">
+        <checkbox/><text>Writing a Grow Diary</text>
+      </label>
+      <label class="quest-row">
+        <checkbox/><text>Talking with Plant</text>
+      </label>
+    </checkbox-group>
+  </view>
+
+  <!-- 상태 카드 -->
+  <view class="status card">
+    <image class="pot" src="/images/flowerpot_icon.png" mode="aspectFit"/>
+    <view class="status-text">
+      <text class="big">I am feeling</text>
+      <text class="accent">cool</text>
+      <text class="big">and</text>
+      <text class="accent">refreshing</text>
+      <view class="mini-rows">
+        <view class="mini">
+          <image src="/images/temperature.png" class="mini-icon"/>
+          <text>It's cozy</text>
+        </view>
+        <view class="mini">
+          <image src="/images/moisture.png" class="mini-icon"/>
+          <text>Enough</text>
+        </view>
+        <view class="mini">
+          <image src="/images/sun.png" class="mini-icon"/>
+          <text>Great !</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 하단 3타일 -->
+  <view class="tiles">
+    <view class="tile weather" bindtap="openWeather">
+      <image class="tile-bg" src="/images/sunny.png" mode="aspectFill"/>
+      <text class="w-temp">{{weather.temp}}℃</text>
+      <text class="w-title">{{weather.text}}</text>
+      <view class="pm-ring">
+        <view class="pm-ring-outer"></view>
+        <view class="pm-ring-inner"></view>
+      </view>
+      <text class="pm-label">PM {{weather.pm10}}</text>
+    </view>
+
+    <view class="tile album" bindtap="goAlbum">
+      <image class="tile-bg" src="/images/album.png"/>
+      <text class="tile-title">Growth album</text>
+    </view>
+
+    <view class="tile care" bindtap="goCare">
+      <image class="tile-bg" src="/images/water.png" mode="aspectFill"/>
+      <text class="tile-title">Taking care of Plants</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,76 @@
+/* 페이지 배경 */
+page { background: #FFFCEE; }
+.album-bg {
+  position: absolute; left: 0; top: 0;
+  height: 2200rpx;
+}
+
+/* 상단 녹색 오버레이 & 타이틀 */
+.header-scrim {
+  position: absolute; left: 0; top: 0; width: 750rpx; height: 236rpx; /* 393×123px */
+  background: rgba(74,159,78,0.6); z-index: 1;
+}
+.header {
+  position: absolute; left: 0; top: 86rpx; width: 750rpx; z-index: 2;
+  text-align: center; color: #fff;
+}
+.header .title { font-size: 42rpx; font-weight: 500; }
+.header .sub   { display:block; margin-top: 12rpx; font-size: 30rpx; opacity:.95; }
+
+/* 컨테이너 */
+.container {
+  position: relative; z-index: 3;
+  padding: 280rpx 32rpx 40rpx;   /* 헤더 아래로 내림 */
+}
+
+/* 작성 폼 */
+.card { background: rgba(255,255,255,.82); border-radius: 24rpx; box-shadow: 0 8rpx 24rpx rgba(0,0,0,.12); }
+.composer { padding: 24rpx; margin-bottom: 32rpx; }
+.pick-row { display:flex; align-items:center; gap:16rpx; margin-bottom:16rpx; }
+.preview { width: 280rpx; height: 280rpx; border-radius: 16rpx; background:#eee; }
+.pick-btn,.remove-btn { padding: 16rpx 24rpx; border-radius: 999rpx; background:#efefef; }
+.note-input { width:100%; min-height:120rpx; padding:16rpx; background:#fafafa; border-radius:12rpx; }
+.submit { margin-top: 16rpx; border-radius: 999rpx; }
+
+/* 앨범 항목 (프레임+사진+말풍선) */
+.entry {
+  position: relative;
+  height: 360rpx;         /* 184px 근처의 높이 */
+  margin: 40rpx 0;
+}
+.photo-wrap {
+  position: absolute; left: 0rpx; top: 0; width: 368rpx; height: 368rpx;
+}
+.img {
+  position: absolute; left: 18rpx; top: 18rpx;
+  width: 332rpx; height: 332rpx; border-radius: 8rpx;
+  object-fit: cover;
+}
+.frame {
+  position: absolute; left: 0; top: 0; width: 368rpx; height: 368rpx;
+  pointer-events: none;   /* 클릭 방해 없이 */
+}
+
+/* 날짜 (오른쪽 상단의 흰 글자) */
+.date {
+  position: absolute; right: 48rpx; top: 8rpx;
+  color: #ffffff; font-size: 26rpx; text-shadow: 0 2rpx 6rpx rgba(0,0,0,.25);
+}
+
+/* 말풍선 */
+.bubble {
+  position: absolute; right: 36rpx; top: 120rpx;
+  width: 250rpx; padding: 18rpx 22rpx;
+  background: rgba(255,255,255,.92);
+  border-radius: 28rpx; /* 둥글둥글 */
+  box-shadow: 0 8rpx 16rpx rgba(0,0,0,.12);
+}
+.bubble-text { font-size: 30rpx; color: #595959; }
+
+/* 비어있을 때 */
+.empty { text-align:center; color:#aaa; margin-top: 60rpx; font-size: 28rpx; }
+
+/* 반응형 보정 (작은 기기에서 버블 폭 줄임) */
+@media (max-width: 360px) {
+  .bubble { max-width: 320rpx; }
+}
