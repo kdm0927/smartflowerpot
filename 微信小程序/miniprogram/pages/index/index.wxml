@@ -1,0 +1,58 @@
+<view class="container">
+  <!-- 数据展示卡片 -->
+  <view class="data-card">
+    <view class="data-row">
+      <view class="data-item">
+        <view class="data-content">
+          <text class="data-label">温度</text>
+          <text class="data-value">{{temperature}} ℃</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <view class="data-content">
+          <text class="data-label">湿度</text>
+          <text class="data-value">{{humidity}} %</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="data-row">
+      <view class="data-item">
+        <view class="data-content">
+          <text class="data-label">土壤湿度</text>
+          <text class="data-value">{{soilMoisture}} %</text>
+        </view>
+      </view>
+      <view class="data-item">
+        <view class="data-content">
+          <text class="data-label">光照</text>
+          <text class="data-value">{{light}} Lux</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 模式显示 -->
+  <view class="mode-display {{currentMode === 'manual' ? 'manual-mode' : 'auto-mode'}}">
+    <text class="mode-text">{{currentMode === 'manual' ? '手动模式' : '自动模式'}}</text>
+  </view>
+
+  <!-- 水泵控制区域（手动模式显示） -->
+  <view class="pump-control" wx:if="{{currentMode === 'manual'}}">
+    <view class="pump-title">水泵控制</view>
+    <view class="pump-buttons">
+      <button type="primary" bindtap="controlPump" data-value="true">打开水</button>
+      <button type="warn" bindtap="controlPump" data-value="false">关闭水</button>
+    </view>
+  </view>
+
+  <!-- 自动模式提示 -->
+  <view class="auto-notice" wx:if="{{currentMode === 'auto'}}">
+    <text>当前为自动模式，系统将根据土壤湿度数据自动控制水泵</text>
+  </view>
+
+  <!-- 状态提示 -->
+  <view class="status">
+    <text>{{statusText}}</text>
+  </view>
+</view>
