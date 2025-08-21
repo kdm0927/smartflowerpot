@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/login/index",
     "pages/index/index",
     "pages/care/care",
-    "pages/album/album"
+    "pages/album/album",
+    "pages/nurse/index"
   ],
   "window": { "navigationStyle": "custom", "backgroundTextStyle": "light" }
 }

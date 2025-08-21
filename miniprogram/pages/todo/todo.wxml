@@ -1,0 +1,36 @@
+<back-btn text="Back" home="/pages/index/index" />
+
+
+<view class="todo">
+  <view class="header">
+    <text class="title">Shared To-Do</text>
+    <text class="sub">{{today}} · Role: {{roleLabel}}</text>
+  </view>
+
+  <!-- 방 선택(같은 roomId면 서로 같은 리스트 공유) -->
+  <view class="room">
+    <input class="room-input" placeholder="Room ID (같은 값이면 서로 공유)"
+           value="{{roomId}}" bindinput="onRoomInput" />
+    <button class="room-btn" size="mini" bindtap="saveRoom">Save</button>
+  </view>
+
+  <!-- 새 항목 추가 (보호자/환자 모두 가능) -->
+  <view class="add">
+    <input class="add-input" placeholder="새 할 일을 입력…"
+           value="{{newText}}" bindinput="onNewText" />
+    <button class="add-btn" type="primary" size="mini" bindtap="addTodo">Add</button>
+  </view>
+
+  <!-- 할 일 리스트 -->
+  <block wx:for="{{items}}" wx:key="_id">
+    <label class="row">
+      <checkbox checked="{{item.done}}" data-id="{{item._id}}" bindchange="toggle"/>
+      <view class="txt">
+        <text class="{{item.done?'done':''}}">{{item.text}}</text>
+        <text class="meta">by {{item.doneByShort}} · {{item.displayTime}}</text>
+      </view>
+    </label>
+  </block>
+
+  <view class="empty" wx:if="{{!items.length}}">아직 항목이 없어요</view>
+</view>

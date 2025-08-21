@@ -1,0 +1,22 @@
+page{ background:#FFFCEE; }
+.todo{ padding: 28rpx; }
+.header{ text-align:center; margin: 20rpx 0 12rpx; color:#2e7d32; }
+.title{ font-size: 44rpx; font-weight: 600; display:block; }
+.sub{ font-size: 26rpx; opacity:.75; }
+
+.room{ display:flex; gap:16rpx; align-items:center; margin: 16rpx 0 8rpx; }
+.room-input{ flex:1; background:#fff; border-radius: 16rpx; padding: 16rpx 20rpx; }
+.room-btn{ border-radius: 999rpx; }
+
+.add{ display:flex; gap:16rpx; align-items:center; margin: 8rpx 0 24rpx; }
+.add-input{ flex:1; background:#fff; border-radius: 16rpx; padding: 16rpx 20rpx; }
+.add-btn{ border-radius: 999rpx; }
+
+.row{ display:flex; gap:16rpx; align-items:flex-start; padding: 18rpx;
+      background: rgba(255,255,255,.9); border-radius: 18rpx; margin-bottom: 14rpx;
+      box-shadow:0 8rpx 16rpx rgba(0,0,0,.08); }
+.row checkbox{ transform: scale(0.9); }
+.txt{ display:flex; flex-direction:column; gap:6rpx; }
+.done{ text-decoration: line-through; color:#888; }
+.meta{ font-size: 22rpx; color:#9e9e9e; }
+.empty{ text-align:center; color:#aaa; margin-top: 40rpx; }

@@ -1,0 +1,103 @@
+/* 전체 카드 */
+.card {
+  margin: 20rpx;
+  padding: 30rpx;
+  background: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 로그아웃 버튼 */
+.logout {
+  background: #f44336;
+  color: #fff;
+  border-radius: 8rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+/* 환자 ID 입력 row */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.label {
+  width: 180rpx;
+  font-size: 28rpx;
+  color: #555;
+}
+
+.input {
+  flex: 1;
+  padding: 16rpx;
+  border: 1px solid #ccc;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  background: #fafafa;
+}
+
+/* 퀘스트 리스트 */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.item {
+  padding: 20rpx;
+  border: 1px solid #e0e0e0;
+  border-radius: 12rpx;
+  background: #fafafa;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 16rpx;
+}
+
+/* 삭제 버튼 */
+.danger {
+  background: #f44336;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  align-self: flex-start;
+}
+
+/* 하단 액션 버튼 */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+
+.actions button {
+  flex: 1;
+  margin: 0 10rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  border-radius: 12rpx;
+}

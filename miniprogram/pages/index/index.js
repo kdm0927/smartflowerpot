@@ -1,46 +1,62 @@
-// 실제 값으로 바꾸세요
+import { requireRole, getAuth, clearAuth } from '../../utils/auth';
+import { loadQuests, saveQuests, today } from '../../utils/store';
+
 const productId = '你的ProductId';
 const deviceName = '你的DeviceName';
 
 Page({
   data: {
+    // 환자 홈 기본 상태
+    patientId: '',
+    today: '',
+    growing: 10,
+
+    // TODO 표시용 (간호사가 저장한 항목을 로컬에서 읽어옴)
+    quests: [],
+
+    // 센서/날씨 (클라우드 사용 시)
     weather: { temp: '--', text: '--', pm10: '--' },
     temperature: '--',
     humidity: '--',
     soilMoisture: '--',
-    statusText: '',
-    today: '',
-    growing: 10
+    statusText: ''
   },
 
-  onLoad() {
-    this.setData({ today: new Date().toISOString().slice(0, 10) });
-    this.fetchTelemetry();
-    // 타이머는 인스턴스 프로퍼티에 보관
-    this._timer = setInterval(() => this.fetchTelemetry(), 10000);
-    this.fetchWeather();
+  onLoad(q) {
+    if (!requireRole('patient')) return;
+
+    // 환자 ID 결정
+    const a = getAuth();
+    const pid = (q && q.patientId) || (a && a.patientId) || 'patient_001';
+
+    // 오늘 날짜
+    const d = today();
+
+    // 로컬에 저장된 환자 TODO 불러오기
+    const quests = loadQuests(pid, d);
+
+    this.setData({ patientId: pid, today: d, quests });
+
+    // 클라우드/원격 호출은 토글에 따라 실행
+      this.fetchTelemetry();
+      this._timer = setInterval(() => this.fetchTelemetry(), 10000);
+      this.fetchWeather();
   },
 
   onUnload() {
     if (this._timer) clearInterval(this._timer);
   },
 
-  async fetchWeather() {
-    try {
-      const loc = await wx.getLocation({ type: 'wgs84' });
-      const { result } = await wx.cloud.callFunction({
-        name: 'quickstartFunctions',
-        data: { type: 'weather.get', lat: loc.latitude, lon: loc.longitude }
-      });
-      const current = result?.current || {};
-      const temp = current.temperature_2m ?? '--';
-      const pm10 = (result?.hourly?.pm10?.[0]) ?? '--';
-      const text = codeToText(current.weather_code);
-      this.setData({ weather: { temp, pm10, text } });
-    } catch (e) {
-      // 위치 권한 없으면 조용히 패스
-    }
-  },
+  onQuestChange(e) {
+    const checkedValues = e.detail.value; // 선택된 key 값 배열
+    const quests = this.data.quests.map(q => ({
+      ...q,
+      checked: checkedValues.includes(q.key)
+    }));
+    this.setData({ quests });
+  },  
+
+  async fetchWeather() { try { const loc = await wx.getLocation({ type: 'wgs84' }); const { result } = await wx.cloud.callFunction({ name: 'quickstartFunctions', data: { type: 'weather.get', lat: loc.latitude, lon: loc.longitude } }); const current = result?.current || {}; const temp = current.temperature_2m ?? '--'; const pm10 = (result?.hourly?.pm10?.[0]) ?? '--'; const text = codeToText(current.weather_code); this.setData({ weather: { temp, pm10, text } }); } catch (e) {  } },
 
   async fetchTelemetry() {
     try {
@@ -49,8 +65,6 @@ Page({
         data: { type: 'iot.query', productId, deviceName }
       });
       const result = res?.result ?? null;
-      // console.log('iot.query result ===>', JSON.stringify(result));
-
       const readings = normalizeTelemetry(result);
       this.setData({
         temperature: readings.temperature,
@@ -64,9 +78,22 @@ Page({
     }
   },
 
-  goCare() { wx.navigateTo({ url: '/pages/care/care' }); },
-  goAlbum() { wx.navigateTo({ url: '/pages/album/album' }); }
-});
+  // 네비게이션(기존 그대로)
+  goCare()  { wx.navigateTo({ url: '/pages/care/care' }); },
+  goAlbum() { wx.navigateTo({ url: '/pages/album/album' }); 
+  },
+
+  onSave() {
+    saveQuests(this.data.patientId, this.data.quests, this.data.today);
+    wx.showToast({ title: 'Saved', icon: 'success' });
+  },
+  
+  onLogout() {
+    clearAuth();
+    wx.reLaunch({ url: '/pages/login/index' });
+  }
+}
+);
 
 // ===== 유틸 =====
 function codeToText(code){

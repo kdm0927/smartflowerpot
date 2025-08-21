@@ -1,0 +1,41 @@
+<view class="card">
+  <view class="header">
+    <text class="title">Nurse · Today’s Quest (Edit & Save)</text>
+    <button class="logout" size="mini" bindtap="onLogout">Logout</button>
+  </view>
+
+  <view class="row">
+    <text class="label">patientId</text>
+    <input class="input" placeholder="patient_001"
+           value="{{patientId}}" bindinput="onPidInput" />
+  </view>
+
+  <view class="list">
+    <block wx:for="{{items}}" wx:key="key">
+      <view class="item">
+        <view class="item-row">
+          <text class="label">Title</text>
+          <input class="input" placeholder="Quest title"
+                 data-index="{{index}}" value="{{item.title}}"
+                 bindinput="onTitleInput" />
+        </view>
+
+        <view class="item-row">
+          <text class="label">Default checked</text>
+          <switch checked="{{item.checked}}"
+                  data-index="{{index}}"
+                  bindchange="onSwitchChange" />
+        </view>
+
+        <button class="danger" size="mini"
+                data-index="{{index}}"
+                bindtap="onRemoveItem">Delete</button>
+      </view>
+    </block>
+  </view>
+
+  <view class="actions">
+    <button type="default" bindtap="onAddItem">+ Add Item</button>
+    <button type="primary" bindtap="onSave">Save</button>
+  </view>
+</view>

@@ -9,21 +9,18 @@
     <text class="t2">{{today}}, Growing+{{growing}}</text>
   </view>
 
-  <!-- Today’s Quest 카드 (간단 버전) -->
-  <view class="quest card">
-    <text class="quest-title">Today’s Quest</text>
-    <checkbox-group>
-      <label class="quest-row">
-        <checkbox checked="true"/><text>Naming my Plant</text>
-      </label>
-      <label class="quest-row">
-        <checkbox/><text>Writing a Grow Diary</text>
-      </label>
-      <label class="quest-row">
-        <checkbox/><text>Talking with Plant</text>
-      </label>
-    </checkbox-group>
-  </view>
+<view class="quest card">
+  <text class="quest-title">Today’s Quest</text>
+  <checkbox-group bindchange="onQuestChange">
+  <block wx:for="{{quests}}" wx:key="key">
+    <label class="quest-row">
+      <checkbox value="{{item.key}}" checked="{{item.checked}}"/>
+      <text>{{item.title}}</text>
+    </label>
+  </block>
+</checkbox-group>
+</view>
+
 
   <!-- 상태 카드 -->
   <view class="status card">
@@ -73,4 +70,6 @@
       <text class="tile-title">Taking care of Plants</text>
     </view>
   </view>
+  <button class="logout" size="mini" bindtap="onLogout">Logout</button>
+  <button type="primary" bindtap="onSave">Save</button>
 </view>
