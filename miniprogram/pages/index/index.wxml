@@ -13,12 +13,13 @@
   <text class="quest-title">Today’s Quest</text>
   <checkbox-group bindchange="onQuestChange">
   <block wx:for="{{quests}}" wx:key="key">
-    <label class="quest-row">
-      <checkbox value="{{item.key}}" checked="{{item.checked}}"/>
-      <text>{{item.title}}</text>
-    </label>
-  </block>
-</checkbox-group>
+    <label    class="quest-row">
+        <checkbox value="{{item.key}}" checked="{{item.checked}}"/>
+        <text>{{item.title}}</text>
+      </label>
+    </block>
+  </checkbox-group>
+  <button type="primary" size="mini" bindtap="onSave">Save</button>
 </view>
 
 
@@ -69,7 +70,6 @@
       <image class="tile-bg" src="/images/water.png" mode="aspectFill"/>
       <text class="tile-title">Taking care of Plants</text>
     </view>
+    <button class="logout" size="mini" bindtap="onLogout">Logout</button>
   </view>
-  <button class="logout" size="mini" bindtap="onLogout">Logout</button>
-  <button type="primary" bindtap="onSave">Save</button>
 </view>
