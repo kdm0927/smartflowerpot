@@ -1,7 +1,7 @@
 /* 전체 카드 */
 .card {
-  margin: 20rpx;
-  padding: 30rpx;
+  margin: 50rpx;
+  padding: 60rpx;
   background: #ffffff;
   border-radius: 16rpx;
   box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);

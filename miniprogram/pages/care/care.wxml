@@ -2,7 +2,7 @@
 
 <view class="care">
   <!-- 배경 + 상단 스크림 -->
-  <image class="bg" src="/images/waterbg.png" mode="aspectFill" />
+  <image class="bg" src="/images/BgImage.png" mode="aspectFill" />
   <view class="scrim"></view>
 
   <!-- 헤더 -->
@@ -24,8 +24,13 @@
           disabled="{{watering}}">
     <image class="drop-img" src="/images/watericon.png" mode="aspectFit" />
     <view class="drop-label">
-      <text>Water Your Flower!</text>
+      <text>Water
+      Your Flower!</text>
     </view>
+      <!-- 新增：3个水滴元素（用于动画） -->
+    <view class="water-drop drop-1"></view>
+    <view class="water-drop drop-2"></view>
+    <view class="water-drop drop-3"></view>
   </button>
 
   <!-- 자동급수 카드 -->

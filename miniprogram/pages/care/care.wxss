@@ -1,18 +1,18 @@
-/* 배경 */
+/* 背景 */
 page { background: #FFFCEE; }
 .care { position: relative; width: 750rpx; min-height: 1620rpx; overflow: hidden; }
-.bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
+.bg { position: absolute; left: 0rpx; top: 235rpx; width: 750rpx; height: 1500rpx; }
 
-/* 상단 초록 그라스 */
+/*  상단 초록 그라스 */
 .scrim { position: absolute; left: 0; top: 0; width: 100%; height: 236rpx;
   background: rgba(74,159,78,0.6); z-index: 1; }
 
-/* 헤더 */
+/*  헤더 */
 .header { position: absolute; left: 0; top: 86rpx; width: 100%; text-align: center; color: #fff; z-index: 2; }
 .h1 { font-size: 48rpx; font-weight: 600; }
 .h2 { display: block; margin-top: 12rpx; font-size: 30rpx; opacity: .95; }
 
-/* 말풍선 */
+/*  말풍선 */
 .speech {
   position: absolute; left: 48rpx; right: 48rpx; top: 290rpx; z-index: 3;
   background: rgba(255,255,255,.92); color: #595959; border-radius: 24rpx;
@@ -21,20 +21,70 @@ page { background: #FFFCEE; }
 }
 .speech .em { color: #2e7d32; font-weight: 600; }
 
-/* 큰 물방울 버튼 */
+/*  큰 물방울 버튼 - 保留原有样式并添加动画容器 */
 .drop-btn {
   position: absolute; left: 116rpx; right: 116rpx; top: 520rpx; height: 560rpx;
   background: transparent; border: none; padding: 0;
   display: flex; align-items: center; justify-content: center;
   z-index: 3;
+  /* 新增：作为水滴动画的容器 */
+  overflow: hidden;
 }
 .drop-img { width: 520rpx; height: 520rpx; filter: drop-shadow(0 16rpx 32rpx rgba(0,0,0,.25)); }
-.drop-label { position: absolute; text-align: center; color: #fff; font-size: 44rpx; line-height: 1.3; }
+.drop-label { position: absolute; text-align: center; color: rgb(100, 100, 100); font-size: 44rpx; line-height: 1.3; }
 .drop-btn:active .drop-img { transform: scale(0.98); }
+
+/* 原有脉冲动画保留 */
 .is-watering .drop-img { animation: pulse 1.1s infinite ease-in-out; }
 @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
 
-/* 자동급수 카드 */
+/* 新增：水滴动画元素 */
+.water-drop {
+  position: absolute;
+  width: 24rpx;
+  height: 36rpx;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* 水滴形状 */
+  box-shadow: 0 0 15rpx rgba(74,159,78,0.5); /* 绿色光晕匹配主题 */
+  top: -40rpx; /* 初始位置：按钮顶部外 */
+  left: 50%;
+  transform: translateX(-50%); /* 水平居中 */
+  opacity: 0;
+  z-index: 1; /* 确保在按钮图标下方 */
+}
+
+/* 水滴下落动画 */
+@keyframes dropFall {
+  0% {
+    top: -40rpx;
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    top: 600rpx; /* 终点：按钮底部外（匹配按钮高度560rpx） */
+    opacity: 0;
+    transform: translateX(-50%) scale(0.9);
+  }
+}
+
+/* 浇水状态时激活水滴动画 */
+.is-watering .water-drop {
+  animation: dropFall 1.5s linear infinite;
+}
+
+/* 三个水滴依次延迟下落 */
+.is-watering .drop-1 { animation-delay: 0s; }
+.is-watering .drop-2 { animation-delay: 0.5s; }
+.is-watering .drop-3 { animation-delay: 1s; }
+
+/*  자동급수 카드 */
 .auto-card {
   position: absolute; left: 48rpx; right: 48rpx; bottom: 400rpx; z-index: 3;
   background: rgba(255,255,255,0.8); border-radius: 36rpx;

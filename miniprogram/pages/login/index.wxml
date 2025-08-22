@@ -3,5 +3,4 @@
   <input placeholder="User ID" bindinput="onUid" />
   <input placeholder="Password" password="true" bindinput="onPw" />
   <button bindtap="login">Log in</button>
-  <view class="demo">Demo: nurse/nurse123 · patient/patient123</view>
 </view>

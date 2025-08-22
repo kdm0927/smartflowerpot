@@ -1,8 +1,15 @@
 import { requireRole, getAuth, clearAuth } from '../../utils/auth';
 import { loadQuests, saveQuests, today } from '../../utils/store';
 
-const productId = '你的ProductId';
-const deviceName = '你的DeviceName';
+const config = {
+  productId: '969d3BTNO2',
+  deviceName: 'ESP8266',
+  apiKey: 'version=2018-10-31&res=products%2F969d3BTNO2%2Fdevices%2FESP8266&et=1767245123&method=md5&sign=P%2FhzlD4QjA9n0T8PJtJH%2Bg%3D%3D',
+  apiUrls: {
+    query: 'https://iot-api.heclouds.com/thingmodel/query-device-property',
+    control: 'https://iot-api.heclouds.com/thingmodel/set-device-property'
+  }
+};
 
 Page({
   data: {
@@ -15,11 +22,15 @@ Page({
     quests: [],
 
     // 센서/날씨 (클라우드 사용 시)
-    weather: { temp: '--', text: '--', pm10: '--' },
+    weather: { temp: '37', pm10: '2.5' },
     temperature: '--',
     humidity: '--',
     soilMoisture: '--',
-    statusText: ''
+    light: '--',//add
+    statusText: '',
+
+    tempStatus: '--',
+    moistureStatus: '--'
   },
 
   onLoad(q) {
@@ -38,8 +49,8 @@ Page({
     this.setData({ patientId: pid, today: d, quests });
 
     // 클라우드/원격 호출은 토글에 따라 실행
-      this.fetchTelemetry();
-      this._timer = setInterval(() => this.fetchTelemetry(), 10000);
+      this.fetchData();
+      this._timer = setInterval(() => this.fetchData(), 10000);
       this.fetchWeather();
   },
 
@@ -56,28 +67,103 @@ Page({
     this.setData({ quests });
   },  
 
-  async fetchWeather() { try { const loc = await wx.getLocation({ type: 'wgs84' }); const { result } = await wx.cloud.callFunction({ name: 'quickstartFunctions', data: { type: 'weather.get', lat: loc.latitude, lon: loc.longitude } }); const current = result?.current || {}; const temp = current.temperature_2m ?? '--'; const pm10 = (result?.hourly?.pm10?.[0]) ?? '--'; const text = codeToText(current.weather_code); this.setData({ weather: { temp, pm10, text } }); } catch (e) {  } },
-
-  async fetchTelemetry() {
+  async fetchWeather() {
     try {
-      const res = await wx.cloud.callFunction({
+      const { result } = await wx.cloud.callFunction({
         name: 'quickstartFunctions',
-        data: { type: 'iot.query', productId, deviceName }
+        data: {
+          type: 'weather.get',
+          lat: 32.2044,
+          lon: 119.4522
+        }
       });
-      const result = res?.result ?? null;
-      const readings = normalizeTelemetry(result);
-      this.setData({
-        temperature: readings.temperature,
-        humidity: readings.humidity,
-        soilMoisture: readings.soilMoisture,
-        statusText: 'Updated'
-      });
+      const current = result?.current || {};
+      const temp = current.temperature_2m ?? '--';
+      const pm10 = (result?.hourly?.pm10?.[0]) ?? '--';
+  
+      this.setData({ weather: { temp, pm10 } });
     } catch (e) {
-      console.error('fetchTelemetry error:', e);
-      this.setData({ statusText: 'Failed to fetch' });
+      console.error('weather error:', e);
     }
   },
 
+//----------------------------------------------------------
+  fetchData() {
+    wx.request({
+      url: config.apiUrls.query,
+      method: 'GET',
+      header: {
+        'Accept': 'application/json, text/plain, */*',
+        'authorization': config.apiKey
+      },
+      data: {
+        product_id: config.productId,
+        device_name: config.deviceName
+      },
+      success: (res) => {
+        if (res.statusCode === 200 && res.data.code === 0) {
+          this.processDeviceData(res.data.data); // 处理传感器数据
+          this.setData({
+            statusText: '最后更新: ' + new Date().toLocaleTimeString()
+          });
+        } else {
+          this.setErrorStatus('获取数据失败', res.data?.msg);
+        }
+      },
+      fail: (err) => {
+        this.setErrorStatus('请求失败', err.errMsg);
+      }
+    });
+  },
+
+  // 处理设备数据（从原有OneNet代码整合，适配数据绑定）
+  processDeviceData(data) {
+    const newData = {};
+    data.forEach(item => {
+      switch (item.identifier) {
+        case 'GZ': newData.light = item.value; break; // 光照
+        case 'HUM': newData.humidity = item.value; break; // 湿度
+        case 'TEN': newData.temperature = item.value; break; // 温度
+        case 'TRSD': newData.soilMoisture = item.value; break; // 土壤湿度
+      }
+    });
+
+  // 🌡️ Temperature status
+  let tempStatus = '--';
+  const temp = newData.temperature;
+  if (temp !== undefined) {
+    if (temp < 15) tempStatus = "It's cold";
+    else if (temp > 28) tempStatus = "It's hot";
+    else tempStatus = "It's warm";
+  }
+
+  // 💧 수분 상태 분기 (저항값: 낮음=축축, 높음=건조)
+  // Moisture Status (Low Value == So much water, High Value == So much dry)
+  let moistureStatus = '--';
+  const soil = newData.soilMoisture;
+  if (soil !== undefined) {
+    if (soil < 300) moistureStatus = "So much";   // 물 많음
+    else if (soil > 700) moistureStatus = "Dry";  // 건조
+    else moistureStatus = "Enough";               // 적당
+  }
+
+  // 데이터 반영
+  this.setData({
+    ...newData,
+    tempStatus,
+    moistureStatus
+  });
+  },
+
+  // 错误处理
+  setErrorStatus(title, detail) {
+    let msg = title;
+    if (detail) msg += ': ' + detail;
+    this.setData({ statusText: msg });
+    wx.showToast({ title: msg, icon: 'none' });
+  },
+
+//-------------------------------------------------------------
   // 네비게이션(기존 그대로)
   goCare()  { wx.navigateTo({ url: '/pages/care/care' }); },
   goAlbum() { wx.navigateTo({ url: '/pages/album/album' }); 

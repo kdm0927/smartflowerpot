@@ -1,6 +1,6 @@
 <view class="home">
   <!-- 배경 이미지 -->
-  <image class="bg" src="/images/houseplant-7367379_1280.png" />
+  <image class="bg" src="/images/BgImage.png" />
 
   <!-- 상단 반투명 헤더 -->
   <view class="topbar"></view>
@@ -19,7 +19,7 @@
       </label>
     </block>
   </checkbox-group>
-  <button type="primary" size="mini" bindtap="onSave">Save</button>
+  <button class= "savebtn" type="primary" size="mini" bindtap="onSave">Save</button>
 </view>
 
 
@@ -28,21 +28,17 @@
     <image class="pot" src="/images/flowerpot_icon.png" mode="aspectFit"/>
     <view class="status-text">
       <text class="big">I am feeling</text>
-      <text class="accent">cool</text>
+      <text class="accent">{{tempStatus}}</text>
       <text class="big">and</text>
-      <text class="accent">refreshing</text>
+      <text class="accent">{{moistureStatus}}</text>
       <view class="mini-rows">
         <view class="mini">
           <image src="/images/temperature.png" class="mini-icon"/>
-          <text>It's cozy</text>
+          <text>{{temperature}} °C</text>
         </view>
         <view class="mini">
           <image src="/images/moisture.png" class="mini-icon"/>
-          <text>Enough</text>
-        </view>
-        <view class="mini">
-          <image src="/images/sun.png" class="mini-icon"/>
-          <text>Great !</text>
+          <text>{{moistureStatus}}</text>
         </view>
       </view>
     </view>
@@ -53,7 +49,6 @@
     <view class="tile weather" bindtap="openWeather">
       <image class="tile-bg" src="/images/sunny.png" mode="aspectFill"/>
       <text class="w-temp">{{weather.temp}}℃</text>
-      <text class="w-title">{{weather.text}}</text>
       <view class="pm-ring">
         <view class="pm-ring-outer"></view>
         <view class="pm-ring-inner"></view>
