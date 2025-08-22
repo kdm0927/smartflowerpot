@@ -1,3 +1,5 @@
+<back-btn></back-btn>
+
 <view class="card">
   <view class="header">
     <text class="title">Nurse · Today’s Quest (Edit & Save)</text>

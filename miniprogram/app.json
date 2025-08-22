@@ -1,10 +1,15 @@
 {
   "pages": [
+    "pages/logo/logo",
     "pages/login/index",
     "pages/index/index",
+    "pages/feedback_form/feedback_form",
+    "pages/feedback/feedback",
     "pages/care/care",
     "pages/album/album",
-    "pages/nurse/index"
+    "pages/nurse/menu",
+    "pages/nurse/index",
+    "pages/nurse/status"
   ],
   "window": { "navigationStyle": "custom", "backgroundTextStyle": "light" }
 }

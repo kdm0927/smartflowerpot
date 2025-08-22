@@ -1,0 +1,52 @@
+/* 전체 레이아웃 */
+.home {
+  min-height: 100vh;
+  background-color: #f9fafb;
+  padding: 100rpx;
+  box-sizing: border-box;
+}
+
+/* 상단 제목 */
+.top {
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 60rpx;
+}
+
+/* 버튼 공통 스타일 */
+.btn {
+  background-color: #4caf4f9d;
+  color: #fff;
+  font-size: 34rpx;
+  text-align: center;
+  padding: 24rpx 0;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 6rpx 10rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.2s;
+}
+
+/* 버튼 클릭 효과 */
+.btn:active {
+  background-color: #43a047;
+  transform: scale(0.97);
+}
+
+/* 로그아웃 버튼 */
+.logout {
+  background-color: #72727254;
+  color: #fff;
+  font-size: 32rpx;
+  margin-top: 80rpx;
+  border-radius: 100rpx;
+  padding: 10rpx 0;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 로그아웃 클릭 효과 */
+.logout:active {
+  background-color: #c62828;
+  transform: scale(0.97);
+}

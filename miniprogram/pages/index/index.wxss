@@ -14,19 +14,19 @@
   border-radius: 50rpx; box-shadow: 0 12rpx 24rpx rgba(0,0,0,0.2); }
 
 /* Quest */
-.quest { position: absolute; top:250rpx; left: 78rpx; width: 555rpx; padding: 24rpx; }
+.quest { position: absolute; top:180rpx; left: 78rpx; width: 555rpx; padding: 24rpx; }
 
-.quest-title { display:block; text-align:center; font-size: 60rpx; color:rgb(0, 0, 0); margin-bottom: 16rpx; }
+.quest-title { display:block; text-align:center; font-size: 50rpx; color: #2E7D32; margin-bottom: 16rpx; font-weight: 600;}
 .quest-row { display: flex; align-items: center; gap: 16rpx; margin: 10rpx 0; }
 .quest-row .done { text-decoration: line-through; color: #74CD79; }
 
 /* Status card */
 .status { position: absolute; top: 650rpx; left: 78rpx; width: 595rpx; height: 424rpx; background: #FFFCEE; 
 }
-.pot { position: absolute; left: 99rpx; top: 1000rpx; width: 288rpx; height: 288rpx; transform: translate(-99rpx,-918rpx); } /* 절대좌표 보정 */
-.status-text { position: absolute; left: 650rpx; top: 950rpx; width: 300rpx; transform: translate(-350rpx,-900rpx); }
-.status-text .big { display:block; font-size: 38rpx; color:#595959; }
-.status-text .accent { display:inline-block; font-size: 42rpx; color:#2E7D32; font-weight: 600; margin: 0 6rpx; }
+.pot { position: absolute; left: 120rpx; top: 1000rpx; width: 250rpx; height: 288rpx; transform: translate(-99rpx,-918rpx); } /* 절대좌표 보정 */
+.status-text { position: absolute; left: 660rpx; top: 950rpx; width: 300rpx; transform: translate(-350rpx,-900rpx); }
+.status-text .big { display:block; font-size: 40rpx; color:#595959; }
+.status-text .accent { display:inline-block; font-size: 50rpx; color:#2E7D32; font-weight: 600; margin: 0 6rpx; }
 .mini-rows { margin-top: 16rpx; }
 .mini { display:flex; align-items:center; gap: 10rpx; margin: 8rpx 0; color: #595959; font-size: 30rpx; opacity:.9; }
 .mini-icon { width: 32rpx; height: 32rpx; opacity:.5; }
@@ -51,7 +51,27 @@
 
 .logout {
   color:#595959;
+  background-color: rgba(226, 202, 67, 0.26);
 }
+
+.feedback {
+  color:#595959;
+  background-color: rgba(67, 221, 226, 0.26);
+}
+
+.savebtn {
+  color: #595959;                          /* 글자 색 */
+  background-color: rgba(67, 221, 226, 0.26); /* 배경 색 */
+  border-radius: 100rpx;                     /* 둥근 모서리 */
+  padding: 10rpx 20rpx;                    /* 안쪽 여백 */
+  font-size: 28rpx;                        /* 글자 크기 */
+}
+
+/* 눌렀을 때 효과 */
+.savebtn:active {
+  background-color: rgba(67, 226, 138, 0.5);
+}
+
 
 /* 보조: 시스템 네비가 가리지 않도록 */
 page { background: #FFFCEE; }

@@ -19,7 +19,7 @@
       </label>
     </block>
   </checkbox-group>
-  <button class= "savebtn" type="primary" size="mini" bindtap="onSave">Save</button>
+  <button class= "savebtn" type="default" size="mini" bindtap="onSave">Save</button>
 </view>
 
 
@@ -65,6 +65,8 @@
       <image class="tile-bg" src="/images/water.png" mode="aspectFill"/>
       <text class="tile-title">Taking care of Plants</text>
     </view>
+
     <button class="logout" size="mini" bindtap="onLogout">Logout</button>
+    <button class="feedback" size="mini" bindtap="goFeedback">Feed Back</button>
   </view>
 </view>

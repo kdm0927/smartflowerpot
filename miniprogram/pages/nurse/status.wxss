@@ -1,0 +1,65 @@
+/* 전체 화면 여백 */
+.noti {
+  padding: 0rpx;
+  background-color: #f8f9fa; /* 은은한 배경 */
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* 상단 바 */
+.topbar {
+  height: 60rpx;
+  background-color: #4caf50; /* 초록색 포인트 */
+  border-radius: 0 0 20rpx 20rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 인사말 영역 */
+.greeting {
+  margin-top: 30rpx;
+  margin-bottom: 40rpx;
+  text-align: center;
+}
+
+.t1 {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.t2 {
+  display: block;
+  font-size: 28rpx;
+  color: #666;
+  margin-top: 10rpx;
+}
+
+/* 상태 카드 */
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.08);
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+}
+
+/* 글자 스타일 */
+.big {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.accent {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #4caf50;
+  margin-bottom: 12rpx;
+}

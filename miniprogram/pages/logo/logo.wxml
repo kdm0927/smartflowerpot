@@ -1,0 +1,4 @@
+<view class="logo-container">
+  <image class="logo-img" src="/images/logo.png" mode="aspectFit"></image>
+  <text class="logo-text">Soul Plant</text>
+</view>

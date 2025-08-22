@@ -1,0 +1,16 @@
+<back-btn text="Back" home="/pages/index/index" />
+
+<view class="home">
+  <view class="top"><text>Nurse Menu</text></view>
+    <view class="btn" bindtap="goStatus">
+      <text>Status</text>
+    </view>
+    <view class="btn" bindtap="goNoti">
+      <text>Notification</text>
+    </view>
+    <view class="btn" bindtap="goFeedback">
+      <text>Feedbacks</text>
+    </view>
+    <button class="logout" bindtap="onLogout">Logout</button>
+
+</view>

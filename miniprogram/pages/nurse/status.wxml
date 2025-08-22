@@ -1,0 +1,27 @@
+<back-btn text="Back" home="/pages/nurse/menu" />
+
+<view class="noti">
+  <view class="topbar"></view>
+  <view class="greeting">
+    <text class="t1">Patient's Plant Status\n</text>
+    <text class="t2">{{today}}, Hospitalized+{{growing}}</text>
+  </view>
+
+  <!-- 상태 카드 -->
+<view class="status card">
+  <view class="status-text">
+    <text class="big">PatientId: {{patientId}}\n</text>
+    <text class="big">Plant's Temperature: </text>
+    <text class="accent">{{tempStatus}}</text>
+    <text class="big">Plant's Moisture Status</text>
+    <text class="accent">{{moistureStatus}}</text>
+  </view>
+
+  <!-- 🌱 AI 조언 표시 -->
+  <view class="card">
+    <text class="big">AI Nurse Advice:\n\n</text>
+    <text class="accent">{{advice}}</text>
+  </view>
+</view>
+
+</view>

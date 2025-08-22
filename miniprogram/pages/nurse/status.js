@@ -1,5 +1,5 @@
-import { requireRole, getAuth, clearAuth } from '../../utils/auth';
-import { loadQuests, saveQuests, today } from '../../utils/store';
+import { requireRole, getAuth } from '../../utils/auth';
+import { today } from '../../utils/store';
 
 const config = {
   productId: 'MB99887102',
@@ -13,63 +13,36 @@ const config = {
 
 Page({
   data: {
-    // 환자 홈 기본 상태
-    patientId: '',
-    today: '',
+    patientId: 'patient_001',
+    today: 'today()',
     growing: 10,
-
-    // TODO 표시용 (간호사가 저장한 항목을 로컬에서 읽어옴)
-    quests: [],
-
-    // 센서/날씨 (클라우드 사용 시)
-    weather: { temp: '--', pm10: '--' },
     temperature: '--',
     humidity: '--',
     soilMoisture: '--',
-    light: '--',//add
     statusText: '',
-
     tempStatus: '--',
-    moistureStatus: '--'
+    moistureStatus: '--',
+    advice: '',
+    adviceGiven: false,
   },
 
   onLoad(q) {
-    if (!requireRole('patient')) return;
-
-    // 환자 ID 결정
+    if (!requireRole('nurse')) return;
+  
     const a = getAuth();
     const pid = (q && q.patientId) || (a && a.patientId) || 'patient_001';
-
-    // 오늘 날짜
     const d = today();
-
-    // 로컬에 저장된 환자 TODO 불러오기
-    const quests = loadQuests(pid, d);
-
-    this.setData({ patientId: pid, today: d, quests });
-
-    // 클라우드/원격 호출은 토글에 따라 실행
-      this.fetchData();
-      this._timer = setInterval(() => this.fetchData(), 10000);
-      this.fetchWeather();
-  },
+  
+    this.setData({ patientId: pid, today: d });
+  
+    this.fetchData();
+    this._timer = setInterval(() => this.fetchData(), 10000);
+  },  
 
   onUnload() {
     if (this._timer) clearInterval(this._timer);
   },
 
-  onQuestChange(e) {
-    const checkedValues = e.detail.value; // 선택된 key 값 배열
-    const quests = this.data.quests.map(q => ({
-      ...q,
-      checked: checkedValues.includes(q.key)
-    }));
-    this.setData({ quests });
-  },  
-
-  async fetchWeather() { try { const { result } = await wx.cloud.callFunction({ name: 'quickstartFunctions', data: { type: 'weather.get', lat: 32.2044, lon: 119.4522 } }); const current = result?.current || {}; const temp = current.temperature_2m ?? '--'; const pm10 = (result?.hourly?.pm10?.[0]) ?? '--'; this.setData({ weather: { temp, pm10 } }); } catch (e) { console.error('weather error:', e); } },
-
-//----------------------------------------------------------
   fetchData() {
     wx.request({
       url: config.apiUrls.query,
@@ -85,6 +58,12 @@ Page({
       success: (res) => {
         if (res.statusCode === 200 && res.data.code === 0) {
           this.processDeviceData(res.data.data); // 处理传感器数据
+
+          if (!this.data.adviceGiven) {
+            this.fetchAdvice();
+            this.setData({ adviceGiven: true });
+          }
+
           this.setData({
             statusText: '最后更新: ' + new Date().toLocaleTimeString()
           });
@@ -114,9 +93,9 @@ Page({
   let tempStatus = '--';
   const temp = newData.temperature;
   if (temp !== undefined) {
-    if (temp < 15) tempStatus = "Cold";
-    else if (temp > 35) tempStatus = "Hot";
-    else tempStatus = "Warm";
+    if (temp < 15) tempStatus = "It's cold";
+    else if (temp > 28) tempStatus = "It's hot";
+    else tempStatus = "It's warm";
   }
 
   // 💧 수분 상태 분기 (저항값: 낮음=축축, 높음=건조)
@@ -135,7 +114,40 @@ Page({
     tempStatus,
     moistureStatus
   });
+
+  // AI Nurse Advice
+  this.getAdvice(tempStatus, moistureStatus);
   },
+
+  // Gemini API 호출
+getAdvice(tempStatus, moistureStatus) {
+  const prompt = `
+  Plant's Temperature: ${tempStatus}, Plant's Moisture Status: ${moistureStatus}
+  당신은 간호사입니다. 환자가 키우는 식물의 상태인 위 데이터들을 이해하고 짧은 행동을 해야 합니다.
+  예를 들어, It's Hot & Dry라면 (짧은 문장,영어) "환자가 돌보는 식물의 상태가 안좋은 것 같아요. 환자의 거동이 불편한지 등의 상태를 확인해야 해요."라는 AI Nurse Advice가 출력되게 됩니다.
+  `;
+
+  wx.request({
+    url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDj45Vd67DvwzZu_QeMggB7ZRyX93_g2lI",
+
+    method: "POST",
+    header: {
+      "Content-Type": "application/json"
+    },
+    data: {
+      contents: [{ parts: [{ text: prompt }] }]
+    },
+    success: (res) => {
+      const advice = res.data?.candidates?.[0]?.content?.parts?.[0]?.text 
+                  || "AI 조언을 가져올 수 없습니다.";
+      this.setData({ advice });
+    },
+    fail: (err) => {
+      console.error("AI advice error:", err);
+      this.setData({ advice: "AI 호출 실패" });
+    }
+  });
+},
 
   // 错误处理
   setErrorStatus(title, detail) {
@@ -144,33 +156,7 @@ Page({
     this.setData({ statusText: msg });
     wx.showToast({ title: msg, icon: 'none' });
   },
-
-//-------------------------------------------------------------
-  // 네비게이션(기존 그대로)
-  goCare()  { wx.navigateTo({ url: '/pages/care/care' }); },
-  goAlbum() { wx.navigateTo({ url: '/pages/album/album' }); 
-  },
-  goFeedback() { wx.navigateTo({ url: '/pages/feedback_form/feedback_form' }); 
-  },
-
-  onSave() {
-    saveQuests(this.data.patientId, this.data.quests, this.data.today);
-    wx.showToast({ title: 'Saved', icon: 'success' });
-  },
-  
-  onLogout() {
-    clearAuth();
-    wx.reLaunch({ url: '/pages/login/index' });
-  }
-}
-);
-
-// ===== 유틸 =====
-function codeToText(code){
-  const m = { 0:'Sunny', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
-              45:'Fog', 51:'Drizzle', 61:'Rain', 71:'Snow', 95:'Thunder' };
-  return m[code] || '—';
-}
+});
 
 /**
  * OneNET 응답 정규화

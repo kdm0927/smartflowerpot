@@ -1,0 +1,18 @@
+<view class="topbar"></view>
+
+<view class="feedback">
+  <view class="topbar">Patient Feedbacks</view>
+  <back-btn text="Back" home="/pages/nurse/menu" />
+
+  <block wx:for="{{feedbacks}}" wx:key="id">
+    <view class="card">
+      <text class="title">{{item.title}}</text>
+      <text class="content">{{item.content}}</text>
+      <text class="date">{{item.date}}</text>
+    </view>
+  </block>
+
+  <view wx:if="{{feedbacks.length === 0}}" class="empty">
+    <text>No feedbacks yet.</text>
+  </view>
+</view>

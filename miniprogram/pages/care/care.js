@@ -1,8 +1,8 @@
 // 设备配置（使用OneNet实际参数）
 const config = {
-  productId: '969d3BTNO2',
-  deviceName: 'ESP8266',
-  apiKey: 'version=2018-10-31&res=products%2F969d3BTNO2%2Fdevices%2FESP8266&et=1767245123&method=md5&sign=P%2FhzlD4QjA9n0T8PJtJH%2Bg%3D%3D',
+  productId: 'MB99887102',
+  deviceName: 'RaspberryPi',
+  apiKey: 'version=2018-10-31&res=products%2FMB99887102%2Fdevices%2FRaspberryPi&et=1756540800&method=sha1&sign=SYdgKBMW4Z2KgRAgwYXbBwCZbA0%3D',
   apiUrls: {
     query: 'https://iot-api.heclouds.com/thingmodel/query-device-property',
     control: 'https://iot-api.heclouds.com/thingmodel/set-device-property'

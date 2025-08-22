@@ -1,0 +1,12 @@
+<view class="feedback-form">
+  <text class="title">Send Feedback</text>
+  
+  <textarea 
+    placeholder="Write your feedback here..." 
+    maxlength="200"
+    bindinput="onInput"
+    value="{{content}}"
+  />
+
+  <button class="savebtn" bindtap="onSave">Submit</button>
+</view>

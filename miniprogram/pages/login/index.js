@@ -29,7 +29,7 @@ Page({
 
   route(role, patientId){
     if (role === 'nurse') {
-      wx.reLaunch({ url: '/pages/nurse/index' });
+      wx.reLaunch({ url: '/pages/nurse/menu' });
     } else {
       const pid = patientId || 'patient_001';
       wx.reLaunch({ url: `/pages/index/index?patientId=${pid}` });
